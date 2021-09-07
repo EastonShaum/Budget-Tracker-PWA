@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Transaction = require("../models/transaction.js");
+// const { saveRecord } = require('../public/js/idb.js')
 
 router.post("/api/transaction", ({body}, res) => {
   Transaction.create(body)
@@ -8,6 +9,8 @@ router.post("/api/transaction", ({body}, res) => {
     })
     .catch(err => {
       res.status(404).json(err);
+      saveRecord(dbTransaction);
+      console.log(saveRecord(dbTransaction))
     });
 });
 
