@@ -1,9 +1,9 @@
 let db;
-const request = indexedDB.open('budget_tracker', 1)
+const request = indexedDB.open('budgetTracker', 1)
 
 request.onupgradeneeded = function(event) {
     const db = event.target.result;
-    db.createObjectStore('budget_tracker', { autoIncrement: true});
+    db.createObjectStore('budgetTracker', { autoIncrement: true});
 };
 
 request.onsuccess = function(event) {
@@ -19,22 +19,23 @@ request.onerror = function(event) {
 };
 
 function saveRecord(record) {
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const action = db.transaction(['new_transaction'], 'readwrite');
 
-    const budgetObjectStore = transaction.objectStore('new_transaction');
+    const budgetTrackerObjectStore = action.objectStore('new_transaction');
 
-    budgetObjectStore.add(record)
+    budgetTrackerObjectStore.add(record)
+    console.log('1', budgetTrackerObjectStore)
 }
 
 function uploadTransaction() {
     // open a transaction on your pending db
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const action = db.transaction(['new_transaction'], 'readwrite');
   
     // access your pending object store
-    const budgetObjectStore = transaction.objectStore('new_transaction');
+    const budgetTrackerObjectStore = action.objectStore('new_transaction');
   
     // get all records from store and set to a variable
-    const getAll = budgetObjectStore.getAll();
+    const getAll = budgetTrackerObjectStore.getAll();
   
     getAll.onsuccess = function() {
       // if there was data in indexedDb's store, let's send it to the api server
@@ -54,9 +55,9 @@ function uploadTransaction() {
             }
   
             const transaction = db.transaction(['new_transaction'], 'readwrite');
-            const pizzaObjectStore = transaction.objectStore('new_transaction');
+            const budgetTrackerObjectStore = transaction.objectStore('new_transaction');
             // clear all items in your store
-            pizzaObjectStore.clear();
+            budgetTrackerObjectStore.clear();
           })
           .catch(err => {
             // set reference to redirect back here
