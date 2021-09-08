@@ -10,7 +10,7 @@ request.onsuccess = function(event) {
     db = event.target.result;
 
     if (navigator.online) {
-       // uploadTransaction()
+       uploadTransaction()
     }
 };
 
@@ -19,9 +19,9 @@ request.onerror = function(event) {
 };
 
 function saveRecord(record) {
-    const action = db.transaction(['new_transaction'], 'readwrite');
+    const action = db.transaction(['budgetTracker'], 'readwrite');
 
-    const budgetTrackerObjectStore = action.objectStore('new_transaction');
+    const budgetTrackerObjectStore = action.objectStore('budgetTracker');
 
     budgetTrackerObjectStore.add(record)
     console.log('1', budgetTrackerObjectStore)
@@ -29,10 +29,10 @@ function saveRecord(record) {
 
 function uploadTransaction() {
     // open a transaction on your pending db
-    const action = db.transaction(['new_transaction'], 'readwrite');
+    const action = db.transaction(['budgetTracker'], 'readwrite');
   
     // access your pending object store
-    const budgetTrackerObjectStore = action.objectStore('new_transaction');
+    const budgetTrackerObjectStore = action.objectStore('budgetTracker');
   
     // get all records from store and set to a variable
     const getAll = budgetTrackerObjectStore.getAll();
